@@ -19,6 +19,7 @@ void usercontrol(void) {
 void pre_auton(void) {
   vexcodeInit();
   auton::resetAll();
+  
 }
 
 void autonomous(void) {
