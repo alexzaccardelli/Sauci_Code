@@ -2,14 +2,14 @@
 using namespace vex;
 
 namespace tilter {
-  motor m = motor(PORT7, ratio36_1, false);
+  motor m = motor(PORT2, ratio36_1, false);
   bool holding = false;
   task holdTask;
 
   void reset() {
     holdTask = task(hold);
     holding = false;
-    m = motor(PORT7, ratio36_1, false);
+    m = motor(PORT2, ratio36_1, false);
     m.stop(coast);
     m.resetRotation();
   }
@@ -19,7 +19,7 @@ namespace tilter {
   }
 
   int op() {
-    double upVel = 100, downVel = -100;
+    double upVel = 60, downVel = -100;
     while(1) {
       while(con.ButtonR1.pressing()) {
         holding = false;
@@ -29,7 +29,8 @@ namespace tilter {
         holding = false;
         m.spin(fwd, downVel, pct);
       }
-      holding = true;
+      m.stop(coast);
+      holding = false;
     }
     return 1;
   }

@@ -2,18 +2,18 @@
 using namespace vex;
 
 namespace drive {
-  motor l1 = motor(PORT1, ratio18_1, false);
-  motor l2 = motor(PORT2, ratio18_1, false);
-  motor r1 = motor(PORT3, ratio18_1, true);
-  motor r2 = motor(PORT4, ratio18_1, true);
+  motor l1 = motor(PORT15, ratio18_1, false);
+  motor l2 = motor(PORT5, ratio18_1, false);
+  motor r1 = motor(PORT20, ratio18_1, true);
+  motor r2 = motor(PORT11, ratio18_1, true);
   encoder lEnc = encoder(cpu.ThreeWirePort.A);
   encoder rEnc = encoder(cpu.ThreeWirePort.C);
 
   void reset() {
-    l1 = motor(PORT1, ratio18_1, false);
-    l2 = motor(PORT2, ratio18_1, false);
-    r1 = motor(PORT3, ratio18_1, true);
-    r2 = motor(PORT4, ratio18_1, true);
+    motor l1 = motor(PORT15, ratio18_1, false);
+    motor l2 = motor(PORT5, ratio18_1, false);
+    motor r1 = motor(PORT20, ratio18_1, true);
+    motor r2 = motor(PORT11, ratio18_1, true);
     l1.stop(coast);
     l2.stop(coast);
     r1.stop(coast);
@@ -28,7 +28,7 @@ namespace drive {
 
   int op() {
     double y1, y2, x1, x2, lVel, rVel;
-    double accel = 0.8, max = 100;
+    double accel = 5, max = 100;
     while(1) {
       y1 = con.Axis3.position();
       y2 = con.Axis2.position();

@@ -26,7 +26,7 @@ extern controller con;
 #include "arm.h"
 #include "auton.h"
 
-extern task driveTask, intakeTask, tilterTask, armTask;
+//extern task driveTask, intakeTask, tilterTask, armTask;
 
 #define waitUntil(condition)                                                   \
   do {                                                                         \

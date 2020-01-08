@@ -2,14 +2,14 @@
 using namespace vex;
 
 namespace arm {
-  motor m = motor(PORT8, ratio36_1, false);
+  motor m = motor(PORT1, ratio36_1, false);
   bool holding = false;
   task holdTask;
 
   void reset() {
     holdTask = task(hold);
     holding = false;
-    m = motor(PORT8, ratio36_1, false);
+    m = motor(PORT1, ratio36_1, false);
     m.stop(coast);
     m.resetRotation();
   }
@@ -21,15 +21,17 @@ namespace arm {
   int op() {
     double upVel = 100, downVel = -100;
     while(1) {
-      while(con.ButtonL1.pressing()) {
+      while(con.ButtonX.pressing()) {
         holding = false;
         m.spin(fwd, upVel, pct);
       }
-      while(con.ButtonL2.pressing()) {
+      while(con.ButtonB.pressing()) {
         holding = false;
         m.spin(fwd, downVel, pct);
       }
-      holding = true;
+      m.stop(vex::brakeType::hold);
+      holding = false;
+      wait(5, msec);
     }
     return 1;
   }
