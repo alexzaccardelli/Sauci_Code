@@ -3,12 +3,8 @@ using namespace vex;
 
 namespace tilter {
   motor m = motor(PORT2, ratio36_1, false);
-  bool holding = false;
-  task holdTask;
 
   void reset() {
-    holdTask = task(hold);
-    holding = false;
     m = motor(PORT2, ratio36_1, false);
     m.stop(coast);
     m.resetRotation();
@@ -19,18 +15,29 @@ namespace tilter {
   }
 
   int op() {
-    double upVel = 60, downVel = -100;
+    double upVel = 100, downVel = -100, kP = .4, max = 100;
     while(1) {
       while(con.ButtonR1.pressing()) {
-        holding = false;
         m.spin(fwd, upVel, pct);
       }
       while(con.ButtonR2.pressing()) {
-        holding = false;
         m.spin(fwd, downVel, pct);
       }
-      m.stop(coast);
-      holding = false;
+      if(!con.ButtonR1.pressing() && !con.ButtonR2.pressing()) {
+        double ticks = m.rotation(deg);
+        double err, vel;
+        while(!con.ButtonR1.pressing() && !con.ButtonR2.pressing()) {
+          err = ticks - m.rotation(vex::deg);
+
+          if(err * kP > max) vel = max;
+          else if(err * kP < -max) vel = -max;
+
+          m.spin(fwd, vel, pct);
+
+          wait(5, msec);
+        }
+      }
+      wait(5, msec);
     }
     return 1;
   }
@@ -56,7 +63,7 @@ namespace tilter {
     return 1;
   }
 
-  int hold() {
+  /*int hold() {
     double max = 100, kP = 0.4; //Temporary
     while(true) {
       if(holding) {
@@ -75,6 +82,6 @@ namespace tilter {
       }
     }
     return 1;
-  }
+  }*/
 
 }

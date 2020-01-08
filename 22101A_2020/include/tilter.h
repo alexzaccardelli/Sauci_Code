@@ -4,8 +4,6 @@ using namespace vex;
 
 namespace tilter {
   extern motor m;
-  extern bool holding;
-  extern task holdTask;
 
   void reset();
   void stop();

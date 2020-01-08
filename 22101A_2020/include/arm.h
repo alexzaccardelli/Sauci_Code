@@ -4,8 +4,6 @@ using namespace vex;
 
 namespace arm {
   extern vex::motor m;
-  extern bool holding;
-  extern task holdTask;
 
   void reset();
   void stop();
